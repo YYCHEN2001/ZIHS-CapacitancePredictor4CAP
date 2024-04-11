@@ -1,0 +1,35 @@
+ZIHS-CapacitancePredictor/
+│
+├── data/                   # 用于存储数据文件
+│   ├── raw/                # 原始数据，未经修改
+│   ├── processed/         # 经过预处理的数据，准备用于模型
+│   └── external/          # 来自外部来源的数据，例如公共数据集
+│
+├── notebooks/              # Jupyter notebooks用于数据分析和探索性数据分析
+│   ├── EDA.ipynb           # 探索性数据分析
+│   ├── preprocessing.ipynb # 数据预处理
+│   └── model_experiments.ipynb # 模型试验和验证
+│
+├── src/                    # 项目源代码
+│   ├── __init__.py         # 使Python将src目录视为包
+│   ├── data                # 数据处理脚本
+│   │   ├── make_dataset.py # 脚本用于生成/准备数据
+│   │   └── __init__.py
+│   ├── features            # 特征工程脚本
+│   │   ├── build_features.py # 特征构建脚本
+│   │   └── __init__.py
+│   ├── models              # 模型相关脚本
+│   │   ├── train_model.py  # 模型训练脚本
+│   │   ├── predict_model.py # 模型预测脚本
+│   │   └── __init__.py
+│   └── visualization       # 可视化脚本
+│       ├── visualize.py    # 可视化结果和数据
+│       └── __init__.py
+│
+├── reports/                # 分析报告，包括生成的图表和figures
+│   ├── figures/            # 存储项目图表
+│   └── report.md           # 项目报告或总结
+│
+├── requirements.txt        # 项目依赖文件，方便环境复制
+├── .gitignore              # 忽略不需要上传到Git仓库的文件
+└── README.md               # 项目概述文件，包括安装、配置和使用指南
