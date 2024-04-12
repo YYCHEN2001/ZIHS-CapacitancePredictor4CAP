@@ -20,12 +20,35 @@ def clean_data(file_path):
     return data
 
 
-# 假定文件路径
-file_path = '../../data/raw/Carbon.xlsx'
-cleaned_data = clean_data(file_path)
+def generate_feature_distribution_stats_md(data_path, report_path):
+    # 加载数据
+    data = pd.read_csv(data_path)
 
-# 展示清洗后的数据前几行
-print(cleaned_data.head())
+    # 为所有连续变量生成描述性统计
+    continuous_stats = data.describe()
 
-# 保存清洗后的数据到新的Excel或CSV文件
-cleaned_data.to_csv('../../data/raw/cleaned_data.csv', index=False)
+    # 为所有分类变量生成描述性统计
+    categorical_columns = data.select_dtypes(include=['object']).columns
+    categorical_stats = data[categorical_columns].describe()
+
+    # 转换为Markdown格式
+    stats_md = continuous_stats.to_markdown() + '\n\n' + categorical_stats.to_markdown()
+
+    # 保存报告为Markdown格式
+    with open(report_path, 'w') as f:
+        f.write(stats_md)
+
+
+if __name__ == "__main__":
+    # 假定文件路径
+    file_path = '../../data/raw/Carbon.xlsx'
+    cleaned_data = clean_data(file_path)
+    # 展示清洗后的数据前几行
+    print(cleaned_data.head())
+    # 保存清洗后的数据到新的Excel或CSV文件
+    cleaned_data.to_csv('../../data/raw/cleaned_data.csv', index=False)
+    # 生成特征分布统计报告
+    data_path = '../../data/raw/cleaned_data.csv'
+    report_path = '../../reports/data/feature_distribution_stats.md'
+    generate_feature_distribution_stats_md(data_path, report_path)
+    print("Feature distribution statistics report (Markdown) generated successfully.")

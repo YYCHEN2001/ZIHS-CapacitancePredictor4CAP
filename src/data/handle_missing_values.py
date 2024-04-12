@@ -1,5 +1,7 @@
 import pandas as pd
 
+from clean_data import generate_feature_distribution_stats_md
+
 
 def handle_missing_values(data_path, report_path):
     # 加载数据
@@ -33,7 +35,12 @@ if __name__ == "__main__":
     data_path = '../../data/raw/cleaned_data.csv'
     report_path = '../../reports/data/missing_values_report.md.md'
     cleaned_data = handle_missing_values(data_path, report_path)
-    print("Missing value processing completed. Report generated successfully.")
+    print("Missing value processing completed. Report (Markdown) generated successfully.")
     # 可选: 保存清理后的数据
     cleaned_data_path = '../../data/raw/cleaned_data_after_mvp.csv'
     cleaned_data.to_csv(cleaned_data_path, index=False)
+    # 生成特征分布统计报告
+    data_path = '../../data/raw/cleaned_data_after_mvp.csv'
+    report_path = '../../reports/data/feature_distribution_stats_after_mvp.md'
+    generate_feature_distribution_stats_md(data_path, report_path)
+    print("Feature distribution statistics report (Markdown) generated successfully.")
