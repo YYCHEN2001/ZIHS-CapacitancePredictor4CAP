@@ -1,11 +1,13 @@
 import pandas as pd
 
+
 def handle_missing_values(data_path, report_path):
     # 加载数据
     data = pd.read_csv(data_path)
 
     # 步骤1: 删除具有指定列缺失值的行，并记录被删除的行索引
-    columns_no_missing = ['O', 'N', 'P', 'S', 'B', 'Specific surface area', 'Pore volume', 'Rmic/mes', 'ID/IG', 'Potential window', 'Current density']
+    columns_no_missing = ['O', 'N', 'P', 'S', 'B', 'Specific surface area', 'Pore volume', 'Rmic/mes', 'ID/IG',
+                          'Potential window', 'Current density']
     missing_rows = data[data[columns_no_missing].isnull().any(axis=1)]
     data = data.dropna(subset=columns_no_missing).copy()  # 显式创建副本
 
@@ -25,6 +27,7 @@ def handle_missing_values(data_path, report_path):
 
     # 返回清理后的数据
     return data
+
 
 if __name__ == "__main__":
     data_path = '../../data/raw/cleaned_data.csv'

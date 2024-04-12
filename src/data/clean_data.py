@@ -24,7 +24,7 @@ def clean_data(file_path):
 file_path = '../../data/raw/Carbon.xlsx'
 cleaned_data = clean_data(file_path)
 
-# 展示清洗后的数据的前几行
+# 展示清洗后的数据前几行
 print(cleaned_data.head())
 
 # 保存清洗后的数据到新的Excel或CSV文件
