@@ -11,11 +11,11 @@ data = load_data_dopants(filepath)
 X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
 
 # 初始化模型
-krr = KernelRidge(alpha=0.8,
-                  gamma=0.1,
+krr = KernelRidge(alpha=1.04,
+                  gamma=1.02,
                   kernel='polynomial',
-                  degree=2,
-                  coef0=7.7)
+                  degree=1,
+                  coef0=1.52)
 
 # 评估
 results = train_evaluate(krr, X_train_scaled, y_train, X_test_scaled, y_test)

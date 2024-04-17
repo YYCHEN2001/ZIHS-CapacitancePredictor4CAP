@@ -11,7 +11,11 @@ data = load_data_dopants(filepath)
 X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
 
 # 初始化模型
-rfr = RandomForestRegressor(random_state=21)
+rfr = RandomForestRegressor(n_estimators=140,
+                            max_depth=12,
+                            min_samples_leaf=1,
+                            min_samples_split=2,
+                            random_state=21)
 
 # 评估
 results = train_evaluate(rfr, X_train_scaled, y_train, X_test_scaled, y_test)

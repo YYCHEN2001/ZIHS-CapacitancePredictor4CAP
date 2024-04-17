@@ -11,7 +11,17 @@ data = load_data_dopants(filepath)
 X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
 
 # 初始化模型，这里使用XGBoost回归器
-xgb_regressor = XGBRegressor(random_state=21)
+xgb_regressor = XGBRegressor(n_estimators=190,
+                             learning_rate=0.15,
+                             subsample=0.5,
+                             gamma=0.1,
+                             max_depth=8,
+                             min_child_weight=2,
+                             reg_alpha=0.34,
+                             colsample_bytree=1.0,
+                             colsample_bylevel=0.3,
+                             colsample_bynode=0.7,
+                             random_state=21)
 
 # 评估
 results = train_evaluate(xgb_regressor, X_train_scaled, y_train, X_test_scaled, y_test)
