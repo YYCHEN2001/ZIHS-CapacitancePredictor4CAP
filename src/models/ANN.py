@@ -1,15 +1,36 @@
 import tensorflow as tf
+import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense
-from src.models import (load_data_dopants, dataset_split_10class,
-                        plot_actual_vs_predicted, model_results_to_md)
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 # 读取数据
-filepath = '../../data/processed/data_dopants.csv'
-data = load_data_dopants(filepath)
+data = pd.read_csv('../../data/processed/data_dopants.csv')
+# 对分类变量进行独热编码
+data_encoded = pd.get_dummies(data, columns=['Electrolyte', 'Current collector'])
+# 删除索引列
+data_encoded = data_encoded.drop('Index', axis=1)
+# 将目标值分成10个等级
+data_encoded['target_class'] = pd.qcut(data_encoded['target'], q=10, labels=False)
+X = data_encoded.drop(['target', 'target_class'], axis=1)
+y = data_encoded['target']
+stratify_column = data_encoded['target_class']
 
-# 按10个等级分割数据集，同时标准化数据
-X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
+# 拆分训练和测试集
+X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                    test_size=0.3, random_state=21,
+                                                    stratify=stratify_column)
+
+# 初始化标准化器
+scaler = StandardScaler()
+
+# 使用训练集拟合标准化器
+scaler.fit(X_train)
+
+# 使用拟合过的标准化器来转换训练集和测试集
+X_train_scaled = scaler.transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
 # 初始化ANN模型
 model = Sequential([
@@ -32,15 +53,3 @@ results = {'train_mse': train_mse, 'train_mae': train_mae, 'test_mse': test_mse,
 
 # 打印评估结果
 print(results)
-
-# 绘制实际值与预测值
-plot_actual_vs_predicted(y_train, model.predict(X_train_scaled),
-                         y_test, model.predict(X_test_scaled),
-                         '../../reports/figures/model evaluation/ann.png')
-
-# 不使用kfold_cv，因为ANN的训练方式与传统ML方法不同
-# 如果需要k-fold验证，你需要重新定义交叉验证的逻辑
-
-# 输出markdown报告
-md_path = '../../reports/models/ann_results.md'
-model_results_to_md(model, results, None, md_path)
