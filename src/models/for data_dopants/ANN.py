@@ -3,12 +3,10 @@ from keras.layers import Dense
 from keras.models import Sequential
 from keras.callbacks import EarlyStopping
 from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, root_mean_squared_error
-
-
 from src.models import plot_actual_vs_predicted, load_data_dopants, dataset_split_10class
 
 # 读取数据
-filepath = '../../data/processed/data_dopants.csv'
+filepath = '../../../data/processed/data_dopants.csv'
 data = load_data_dopants(filepath)
 
 # 按10个等级分割数据集，同时标准化数据
@@ -72,7 +70,7 @@ print(metrics_df)
 # 绘制训练集和测试集的实际值与预测值
 plot_actual_vs_predicted(y_train, y_train_pred,
                          y_test, y_test_pred,
-                         '../../reports/figures/model evaluation/ann.png')
+                         '../../../reports/figures/actual vs pred fig for data_dopants/ann.png')
 
 # 获取模型配置
 model_config = model.get_config()
@@ -96,7 +94,7 @@ metrics_md = metrics_df.to_markdown(index=False)
 params_md = params_df.to_markdown(index=False)
 
 # 将Markdown字符串写入文件
-with open('../../reports/models/ann_results.md', 'w', encoding='utf-8') as f:
+with open('../../../reports/results for data_dopants/ann_results.md', 'w', encoding='utf-8') as f:
     f.write("# Model Parameters:\n")
     f.write(params_md + "\n\n")
     f.write("# Performance Metrics:\n")

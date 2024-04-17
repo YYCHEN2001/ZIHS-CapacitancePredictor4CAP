@@ -4,7 +4,7 @@ from src.models import (train_evaluate, plot_actual_vs_predicted,
                         dataset_split_10class, model_results_to_md)
 
 # 读取数据
-filepath = '../../data/processed/data_dopants.csv'
+filepath = '../../../data/processed/data_dopants.csv'
 data = load_data_dopants(filepath)
 
 # 按10个等级分割数据集，同时标准化数据
@@ -24,7 +24,7 @@ print(results)
 # 绘制实际值与预测值
 plot_actual_vs_predicted(y_train, krr.predict(X_train_scaled),
                          y_test, krr.predict(X_test_scaled),
-                         '../../reports/figures/model evaluation/krr.png')
+                         '../../../reports/figures/actual vs pred fig for data_dopants/krr.png')
 
 kfold_df = kfold_cv(krr, X_train_scaled, y_train, n_splits=10, random_state=21)
 
@@ -32,5 +32,5 @@ kfold_df = kfold_cv(krr, X_train_scaled, y_train, n_splits=10, random_state=21)
 print(kfold_df)
 
 # 输出markdown报告
-md_path = '../../reports/models/krr_results.md'
+md_path = '../../../reports/results for data_dopants/krr_results.md'
 model_results_to_md(krr, results, kfold_df, md_path)
