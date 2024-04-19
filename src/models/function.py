@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import KFold
 from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, root_mean_squared_error
 
+
 def load_data_dopants(filepath):
     # 读取数据
     data = pd.read_csv(filepath)
@@ -45,6 +46,7 @@ def dataset_split_10class(data_encoded):
 
     return x_train_scaled, x_test_scaled, y_train, y_test
 
+
 def calculate_metrics(y_true, y_pred):
     """
     Calculate and return actual vs pred fig for data_dopants metrics.
@@ -54,6 +56,16 @@ def calculate_metrics(y_true, y_pred):
     mape = mean_absolute_percentage_error(y_true, y_pred)*100
     rmse = root_mean_squared_error(y_true, y_pred)
     return r2, mae, mape, rmse
+
+
+def metrics_to_dataframe(y_train, y_train_pred, y_test, y_test_pred, model_name):
+    R2_train, MAE_train, MAPE_train, RMSE_train = calculate_metrics(y_train, y_train_pred)
+    R2_test, MAE_test, MAPE_test, RMSE_test = calculate_metrics(y_test, y_test_pred)
+    krr_metrics = {'model': model_name,
+                   'R2_train': R2_train, 'MAE_train': MAE_train, 'MAPE_train': MAPE_train, 'RMSE_train': RMSE_train,
+                   'R2_test': R2_test, 'MAE_test': MAE_test, 'MAPE_test': MAPE_test, 'RMSE_test': RMSE_test}
+    model_name_df = pd.DataFrame([krr_metrics])
+    return model_name_df
 
 
 def train_evaluate(model, x_train_scaled, y_train, x_test_scaled, y_test):
