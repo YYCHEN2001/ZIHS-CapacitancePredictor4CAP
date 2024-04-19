@@ -33,7 +33,7 @@ def objective(params):
 # 定义超参数的搜索空间
 space = {'gamma': 'scale',
          'C': hp.uniform('C', 0.1, 10),
-         'degree': hp.choice('degree', [1, 2, 3, 4, 5, 6, 7, 8]),
+         'degree': hp.choice('degree', [1, 2, 3, 4, 5]),
          'coef0': hp.uniform('coef0', 0, 10),
          'epsilon': hp.uniform('epsilon', 0, 1),
          'kernel': 'poly'}

@@ -11,7 +11,7 @@ data = load_data_dopants(filepath)
 X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
 
 # 初始化模型，这里使用支持向量回归
-svr = SVR(C=0.8, kernel='poly', degree=3, gamma='scale', coef0=7.7, epsilon=0.1)
+svr = SVR(C=2.57, kernel='poly', degree=3, gamma='scale', coef0=4.9, epsilon=0.75)
 
 # 评估
 results = train_evaluate(svr, X_train_scaled, y_train, X_test_scaled, y_test)
