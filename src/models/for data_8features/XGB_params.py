@@ -5,8 +5,8 @@ from hyperopt import fmin, tpe, hp, Trials, STATUS_OK
 from src.models import (load_data_dopants, dataset_split_10class)
 
 # 读取数据
-filepath = '../../../data/processed/data_dopants.csv'
-data = load_data_dopants(filepath)
+filepath = '../../../data/processed/data_8features.csv'
+data = pd.read_csv(filepath)
 
 # 按10个等级分割数据集，同时标准化数据
 X_train_scaled, X_test_scaled, y_train, y_test = dataset_split_10class(data)
@@ -31,7 +31,7 @@ def objective(params):
 
 space = {
     'n_estimators': hp.quniform('n_estimators', 10, 200, 10),
-    'learning_rate': hp.quniform('learning_rate', 0.05, 0.3, 0.02),
+    'learning_rate': hp.quniform('learning_rate', 0.05, 0.3, 0.05),
     'max_depth': hp.quniform('max_depth', 3, 15, 1),
     'subsample': hp.quniform('subsample', 0.1, 1, 0.1),
     'gamma': hp.quniform('gamma', 0.1, 1.0, 0.1),
